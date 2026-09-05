@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кофе Optima — зёрна из Европы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0F0D0C;
+    --surface:#1A1716;
+    --surface-2:#221E1C;
+    --glass: rgba(255,255,255,0.045);
+    --glass-border: rgba(255,255,255,0.09);
+    --yellow:#F4C90D;
+    --yellow-soft: rgba(244,201,13,0.14);
+    --red:#E0392E;
+    --cream:#F7F3EA;
+    --muted:#9C9187;
+    --brown:#6B4226;
+    --radius-lg:22px;
+    --radius-md:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    position:relative;
+    background:var(--bg);
+    color:var(--cream);
+    font-family:'Inter',sans-serif;
+    line-height:1.55;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Unbounded',sans-serif;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  button{font-family:inherit;}
+  input,textarea,select{font-family:inherit;}
+
+  /* ===== DECORATIVE BACKGROUND ===== */
+  .bg-decor{
+    position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  }
+  .bg-decor .blob{
+    position:absolute;border-radius:50%;filter:blur(70px);
+  }
+  .bg-decor .blob-1{width:520px;height:520px;top:-160px;left:-120px;background:radial-gradient(circle, rgba(244,201,13,0.16), transparent 70%);}
+  .bg-decor .blob-2{width:600px;height:600px;top:20%;right:-220px;background:radial-gradient(circle, rgba(224,57,46,0.14), transparent 70%);}
+  .bg-decor .blob-3{width:480px;height:480px;bottom:-140px;left:20%;background:radial-gradient(circle, rgba(107,66,38,0.28), transparent 70%);}
+  .bg-decor .bean-field{
+    position:absolute;inset:0;opacity:0.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='none' stroke='%23F4C90D' stroke-width='2.2'%3E%3Cpath d='M40 15C27 15 18 34 18 52c0 18 9 37 22 37s22-19 22-37c0-18-9-37-22-37z'/%3E%3Cpath d='M40 18c-8 10-8 55 0 68'/%3E%3C/g%3E%3Cg fill='none' stroke='%23F4C90D' stroke-width='2.2' transform='translate(90 80) rotate(35)'%3E%3Cpath d='M20 0C9 0 0 15 0 30s9 30 20 30 20-15 20-30S31 0 20 0z'/%3E%3Cpath d='M20 3c-6 8-6 44 0 54'/%3E%3C/g%3E%3C/svg%3E");
+    background-size:280px 280px;
+  }
+  .bg-decor .ring-outline{
+    position:absolute;border-radius:50%;border:1.5px solid rgba(244,201,13,0.10);
+  }
+  .bg-decor .ring-1{width:340px;height:340px;top:8%;right:8%;}
+  .bg-decor .ring-2{width:220px;height:220px;bottom:12%;left:6%;border-color:rgba(224,57,46,0.10);}
+  .noise-overlay{
+    position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.035;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  header, .hero, .origin-strip, .section, .about, .contact-section, footer, .modal-overlay, .float-contacts{
+    position:relative;z-index:1;
+  }
+
+  /* ===== HEADER ===== */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(15,13,12,0.7);
+    backdrop-filter: blur(14px);
+    border-bottom:1px solid var(--glass-border);
+  }
+  .header-inner{
+    max-width:1200px;margin:0 auto;
+    padding:16px 24px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:20px;
+  }
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand .cup-mark{
+    width:40px;height:40px;border-radius:50%;
+    background: conic-gradient(from 200deg, var(--yellow), #fff6c9, var(--yellow));
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;padding:3px;
+  }
+  .brand .cup-mark-inner{
+    width:100%;height:100%;border-radius:50%;background:var(--bg);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .brand .cup-mark svg{width:18px;height:18px;}
+  .brand-name{font-size:18px;font-weight:600;letter-spacing:0.2px;}
+  .brand-name b{color:var(--red);font-weight:800;}
+  .brand-name span{color:var(--yellow);}
+  nav{display:flex;gap:30px;font-size:14px;font-weight:500;color:#c7bdb0;}
+  nav a{transition:color .15s ease;}
+  nav a:hover{color:var(--cream);}
+  .header-actions{display:flex;align-items:center;gap:12px;}
+  .nav-toggle{
+    display:none;width:38px;height:38px;border-radius:10px;border:1px solid var(--glass-border);
+    background:var(--glass);color:var(--cream);font-size:18px;cursor:pointer;align-items:center;justify-content:center;
+  }
+  .mobile-nav{
+    display:none;flex-direction:column;gap:4px;
+    padding:10px 24px 18px;border-bottom:1px solid var(--glass-border);
+    background:rgba(15,13,12,0.96);
+  }
+  .mobile-nav.open{display:flex;}
+  .mobile-nav a{padding:12px 4px;font-size:15px;color:#dcd4c8;border-bottom:1px solid var(--glass-border);}
+  .mobile-nav a:last-child{border-bottom:none;}
+
+  .cart-btn{
+    display:flex;align-items:center;gap:8px;
+    background:var(--yellow);color:#1a1614;
+    padding:11px 18px;border-radius:30px;
+    font-weight:600;font-size:14px;border:none;cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .cart-btn:hover{transform:translateY(-1px); box-shadow:0 8px 20px rgba(244,201,13,0.25);}
+  .cart-badge{
+    background:var(--red);color:#fff;border-radius:50%;
+    width:20px;height:20px;font-size:11px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    max-width:1200px;margin:0 auto;
+    padding:88px 24px 64px;
+    display:grid;grid-template-columns:1.1fr 0.9fr;
+    gap:56px;align-items:center;
+  }
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    color:var(--yellow);font-weight:600;font-size:13px;
+    background:var(--yellow-soft);
+    padding:7px 14px;border-radius:20px;
+    margin-bottom:24px;
+  }
+  .hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--yellow);}
+  .hero h1{
+    font-size:58px;line-height:1.02;font-weight:700;
+    letter-spacing:-1px;margin-bottom:24px;
+  }
+  .hero h1 em{font-style:normal;color:var(--yellow);}
+  .hero p{color:#c7bdb0;font-size:17px;max-width:480px;margin-bottom:34px;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--red);color:var(--cream);
+    padding:16px 30px;border-radius:12px;
+    font-weight:600;font-size:15px;border:none;cursor:pointer;
+    transition:filter .15s ease, transform .15s ease;
+    box-shadow:0 10px 26px rgba(224,57,46,0.28);
+  }
+  .btn-primary:hover{filter:brightness(1.08); transform:translateY(-1px);}
+  .btn-secondary{
+    padding:16px 28px;border-radius:12px;border:1px solid var(--glass-border);
+    font-weight:600;font-size:15px;cursor:pointer;background:var(--glass);color:var(--cream);
+    transition:border-color .15s ease;
+  }
+  .btn-secondary:hover{border-color:var(--yellow);color:var(--yellow);}
+
+  .hero-form-card{
+    position:relative;
+    background:linear-gradient(150deg, var(--surface), var(--surface-2));
+    border-radius:28px;
+    border:1px solid var(--glass-border);
+    padding:32px;
+    display:flex;flex-direction:column;
+  }
+  .hero-form-card h3{font-size:20px;font-weight:600;margin-bottom:8px;font-family:'Unbounded',sans-serif;}
+  .hero-form-card > p{font-size:13.5px;color:var(--muted);margin-bottom:20px;}
+  .hero-form-card textarea{
+    background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);
+    border-radius:10px;padding:13px 14px;color:var(--cream);font-size:14px;
+    outline:none;resize:vertical;transition:border-color .15s ease;
+  }
+  .hero-form-card textarea::placeholder{color:var(--muted);}
+  .hero-form-card textarea:focus{border-color:var(--yellow);}
+  .hero-stats{
+    display:flex;justify-content:space-between;
+    font-size:12px;color:var(--muted);
+    background:rgba(0,0,0,0.22);
+    border:1px solid var(--glass-border);
+    border-radius:16px;padding:14px 18px;
+    margin-top:22px;
+  }
+  .hero-stats b{display:block;color:var(--cream);font-size:20px;font-family:'Unbounded',sans-serif;font-weight:600;}
+
+  /* ===== ORIGIN STRIP ===== */
+  .origin-strip{border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);padding:22px 24px;background:rgba(15,13,12,0.4);}
+  .origin-strip-inner{
+    max-width:1200px;margin:0 auto;
+    display:flex;gap:40px;flex-wrap:wrap;justify-content:space-between;
+    font-size:13px;color:var(--muted);
+  }
+  .origin-strip-inner strong{color:var(--cream);font-weight:600;}
+
+  /* ===== GENERIC SECTION ===== */
+  .section{max-width:1200px;margin:0 auto;padding:96px 24px;}
+  .section-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    margin-bottom:40px;gap:20px;flex-wrap:wrap;
+  }
+  .section-head h2{font-size:34px;font-weight:600;letter-spacing:-0.5px;}
+  .section-head p{color:var(--muted);max-width:440px;font-size:15px;}
+
+  /* ===== CATALOG ===== */
+  .cat-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:44px;}
+  .cat-tab{
+    padding:11px 20px;border-radius:30px;
+    border:1px solid var(--glass-border);
+    background:var(--glass);color:#c7bdb0;
+    font-size:14px;font-weight:500;cursor:pointer;
+    transition:all .15s ease;
+    display:flex;align-items:center;gap:8px;
+  }
+  .cat-tab .flag{font-size:16px;}
+  .cat-tab:hover{border-color:var(--yellow);}
+  .cat-tab.active{background:var(--yellow);color:#1a1614;border-color:var(--yellow);font-weight:600;}
+
+  .grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:22px;}
+  .card{
+    background:var(--surface);
+    border:1px solid var(--glass-border);
+    border-radius:var(--radius-lg);
+    overflow:hidden;cursor:pointer;
+    transition:border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+  }
+  .card:hover{border-color:var(--yellow); transform:translateY(-4px); box-shadow:0 16px 32px rgba(0,0,0,0.35);}
+  .card-media{
+    aspect-ratio:4/3;
+    background:linear-gradient(160deg, var(--brown), #2b1a10);
+    position:relative;display:flex;align-items:center;justify-content:center;
+  }
+  .card-media .bean{width:32%;opacity:.9;}
+  .card-tag{
+    position:absolute;top:14px;left:14px;
+    background:rgba(15,13,12,0.65);
+    color:var(--yellow);font-size:11px;font-weight:600;
+    padding:5px 11px;border-radius:20px;
+    backdrop-filter:blur(4px);
+  }
+  .card-body{padding:22px;}
+  .card-country{font-size:12px;color:var(--yellow);font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+  .card-title{font-size:18px;font-weight:600;margin-bottom:6px;font-family:'Unbounded',sans-serif;}
+  .card-desc{font-size:13.5px;color:var(--muted);margin-bottom:18px;min-height:38px;}
+  .card-footer{display:flex;justify-content:space-between;align-items:center;}
+  .card-price{font-size:18px;font-weight:700;}
+  .card-price span{font-size:12px;color:var(--muted);font-weight:400;}
+  .card-add{
+    background:transparent;border:1px solid var(--yellow);color:var(--yellow);
+    padding:8px 15px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;
+    transition:all .15s ease;
+  }
+  .card-add:hover{background:var(--yellow);color:#1a1614;}
+
+  /* ===== ROAST COMPARISON ===== */
+  .roast-compare{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  .roast-card{
+    background:var(--surface);border:1px solid var(--glass-border);
+    border-radius:var(--radius-lg);padding:26px 22px;
+    position:relative;overflow:hidden;
+  }
+  .roast-card .flag-big{font-size:26px;margin-bottom:14px;display:block;}
+  .roast-card h3{font-size:17px;font-weight:600;margin-bottom:8px;font-family:'Unbounded',sans-serif;}
+  .roast-card p{font-size:13px;color:var(--muted);margin-bottom:20px;min-height:52px;}
+  .roast-track{height:8px;border-radius:6px;background:rgba(255,255,255,0.07);position:relative;margin-bottom:10px;overflow:hidden;}
+  .roast-track i{position:absolute;top:0;left:0;bottom:0;border-radius:6px;background:linear-gradient(90deg, var(--yellow), var(--red));}
+  .roast-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);}
+
+  /* ===== REVIEWS ===== */
+  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .review-card{
+    background:var(--surface);border:1px solid var(--glass-border);
+    border-radius:var(--radius-lg);padding:26px;
+    display:flex;flex-direction:column;gap:16px;
+  }
+  .review-stars{color:var(--yellow);font-size:15px;letter-spacing:2px;}
+  .review-text{font-size:14.5px;color:#dcd4c8;flex-grow:1;}
+  .review-author{display:flex;align-items:center;gap:12px;}
+  .review-avatar{
+    width:38px;height:38px;border-radius:50%;
+    background:linear-gradient(135deg, var(--yellow), var(--red));
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:14px;color:#1a1614;font-family:'Unbounded',sans-serif;
+    flex-shrink:0;
+  }
+  .review-author div span{display:block;font-size:12px;color:var(--muted);}
+  .review-author div b{font-size:14px;font-weight:600;}
+
+  /* ===== SUBSCRIPTION ===== */
+  .subscribe-wrap{
+    background:linear-gradient(140deg, var(--surface), var(--surface-2));
+    border:1px solid var(--glass-border);
+    border-radius:32px;padding:56px;
+    display:grid;grid-template-columns:1.1fr 0.9fr;gap:50px;align-items:center;
+    position:relative;overflow:hidden;
+  }
+  .subscribe-wrap::before{
+    content:'';position:absolute;top:-40%;right:-10%;
+    width:400px;height:400px;border-radius:50%;
+    background:radial-gradient(circle, rgba(244,201,13,0.12), transparent 70%);
+  }
+  .subscribe-copy h2{font-size:32px;font-weight:600;margin-bottom:16px;letter-spacing:-0.5px;}
+  .subscribe-copy p{color:var(--muted);font-size:15px;margin-bottom:26px;max-width:420px;}
+  .subscribe-perks{display:flex;flex-direction:column;gap:12px;margin-bottom:8px;}
+  .subscribe-perks div{display:flex;align-items:center;gap:10px;font-size:14px;color:#dcd4c8;}
+  .subscribe-perks div b{
+    width:22px;height:22px;border-radius:50%;background:var(--yellow-soft);color:var(--yellow);
+    display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;
+  }
+  .plan-toggle{
+    display:flex;background:rgba(0,0,0,0.25);border-radius:14px;padding:5px;margin-bottom:22px;
+    border:1px solid var(--glass-border);position:relative;z-index:1;
+  }
+  .plan-toggle button{
+    flex:1;border:none;background:transparent;color:var(--muted);
+    padding:11px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;
+    transition:all .15s ease;
+  }
+  .plan-toggle button.active{background:var(--yellow);color:#1a1614;}
+  .plan-card{
+    background:rgba(0,0,0,0.2);border:1px solid var(--glass-border);
+    border-radius:20px;padding:28px;position:relative;z-index:1;
+  }
+  .plan-price{font-size:38px;font-weight:700;font-family:'Unbounded',sans-serif;margin-bottom:4px;}
+  .plan-price span{font-size:13px;color:var(--muted);font-weight:400;font-family:'Inter',sans-serif;}
+  .plan-sub{font-size:13px;color:var(--muted);margin-bottom:22px;}
+  .quick-form{display:flex;flex-direction:column;gap:10px;}
+  .quick-form input, .quick-form select{
+    background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);
+    border-radius:10px;padding:13px 14px;color:var(--cream);font-size:14px;
+    outline:none;transition:border-color .15s ease;
+  }
+  .quick-form input::placeholder{color:var(--muted);}
+  .quick-form input:focus, .quick-form select:focus{border-color:var(--yellow);}
+  .quick-form button{
+    background:var(--red);color:var(--cream);border:none;
+    padding:14px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;
+    margin-top:4px;transition:filter .15s ease;
+  }
+  .quick-form button:hover{filter:brightness(1.1);}
+  .form-note{font-size:11.5px;color:var(--muted);text-align:center;margin-top:4px;}
+
+  /* ===== ABOUT STRIP ===== */
+  .about{background:var(--surface);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border);}
+  .about-inner{max-width:1200px;margin:0 auto;padding:80px 24px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;}
+  .about-item .num{color:var(--red);font-size:26px;font-family:'Unbounded',sans-serif;font-weight:600;margin-bottom:16px;display:block;}
+  .about-item h3{font-size:17px;margin-bottom:10px;font-weight:600;}
+  .about-item p{color:var(--muted);font-size:14px;}
+
+  /* ===== CONTACT / FOOTER ===== */
+  .contact-section{max-width:1200px;margin:0 auto;padding:96px 24px 40px;}
+  .contact-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:50px;}
+  .contact-quick h2{font-size:30px;font-weight:600;margin-bottom:16px;letter-spacing:-0.5px;}
+  .contact-quick p{color:var(--muted);font-size:15px;margin-bottom:30px;max-width:400px;}
+  .quick-links{display:flex;flex-direction:column;gap:12px;}
+  .quick-link{
+    display:flex;align-items:center;gap:14px;
+    background:var(--surface);border:1px solid var(--glass-border);
+    border-radius:14px;padding:16px 18px;transition:border-color .15s ease, transform .15s ease;
+  }
+  .quick-link:hover{border-color:var(--yellow); transform:translateX(4px);}
+  .quick-link .ql-icon{
+    width:40px;height:40px;border-radius:50%;background:var(--yellow-soft);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;
+  }
+  .quick-link div span{display:block;font-size:12px;color:var(--muted);}
+  .quick-link div b{font-size:14.5px;font-weight:600;}
+
+  .feedback-form{background:var(--surface);border:1px solid var(--glass-border);border-radius:var(--radius-lg);padding:34px;}
+  .feedback-form h3{font-size:19px;font-weight:600;margin-bottom:6px;font-family:'Unbounded',sans-serif;}
+  .feedback-form > p{font-size:13.5px;color:var(--muted);margin-bottom:24px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+  .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:7px;}
+  .field input, .field textarea{
+    width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);
+    border-radius:10px;padding:13px 14px;color:var(--cream);font-size:14px;outline:none;
+    transition:border-color .15s ease;resize:vertical;
+  }
+  .field input::placeholder, .field textarea::placeholder{color:#726a61;}
+  .field input:focus, .field textarea:focus{border-color:var(--yellow);}
+  .feedback-submit{
+    background:var(--red);color:var(--cream);border:none;
+    padding:15px 28px;border-radius:10px;font-weight:600;font-size:14.5px;cursor:pointer;
+    margin-top:6px;transition:filter .15s ease;
+  }
+  .feedback-submit:hover{filter:brightness(1.1);}
+
+  footer{border-top:1px solid var(--glass-border);}
+  .footer-inner{max-width:1200px;margin:0 auto;padding:56px 24px 32px;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px;}
+  .footer-brand .brand-name{margin-bottom:14px;}
+  .footer-brand p{font-size:13px;color:var(--muted);max-width:280px;margin-bottom:18px;}
+  .footer-social{display:flex;gap:10px;}
+  .icon-btn{
+    width:38px;height:38px;border-radius:50%;
+    border:1px solid var(--glass-border);background:var(--glass);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    color:var(--cream);transition:border-color .15s ease;
+  }
+  .icon-btn:hover{border-color:var(--yellow);}
+  .footer-col h4{font-size:13px;font-weight:600;margin-bottom:16px;color:var(--cream);}
+  .footer-col a, .footer-col div{display:block;font-size:13.5px;color:var(--muted);margin-bottom:10px;}
+  .footer-col a:hover{color:var(--yellow);}
+  .legal-block{
+    max-width:1200px;margin:0 auto;padding:24px 24px 40px;
+    border-top:1px solid var(--glass-border);
+    font-size:12px;color:#726a61;line-height:1.7;
+  }
+  .legal-block b{color:var(--muted);}
+
+  /* ===== FLOATING QUICK CONTACT ===== */
+  .float-contacts{position:fixed;bottom:26px;right:26px;z-index:60;display:flex;flex-direction:column;gap:12px;align-items:flex-end;}
+  .float-btn{
+    width:52px;height:52px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;box-shadow:0 10px 24px rgba(0,0,0,0.4);
+    border:none;transition:transform .15s ease;font-size:22px;
+  }
+  .float-btn:hover{transform:scale(1.08);}
+  .float-btn.wa{background:#25D366;color:#fff;}
+  .float-btn.tg{background:#2AABEE;color:#fff;}
+  .float-btn.call{background:var(--yellow);color:#1a1614;}
+
+  /* ===== MODAL (shared) ===== */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(8,7,6,0.75);
+    display:none;align-items:center;justify-content:center;
+    z-index:200;padding:24px;backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{
+    background:var(--surface-2);border:1px solid var(--glass-border);
+    border-radius:24px;max-width:840px;width:100%;
+    max-height:88vh;overflow-y:auto;
+    display:grid;grid-template-columns:1fr 1fr;position:relative;
+  }
+  .modal-close{
+    position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;
+    background:rgba(15,13,12,0.7);border:1px solid var(--glass-border);
+    color:var(--cream);font-size:18px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;z-index:5;
+  }
+  .modal-close:hover{border-color:var(--yellow);color:var(--yellow);}
+  .modal-media{
+    background:linear-gradient(160deg, var(--brown), #2b1a10);
+    display:flex;align-items:center;justify-content:center;min-height:280px;
+  }
+  .modal-media .bean{width:34%;}
+  .modal-body{padding:38px 34px;}
+  .modal-country{font-size:13px;color:var(--yellow);font-weight:600;margin-bottom:10px;}
+  .modal-title{font-size:27px;font-weight:600;margin-bottom:14px;font-family:'Unbounded',sans-serif;}
+  .modal-desc{color:#c7bdb0;font-size:14.5px;margin-bottom:24px;}
+  .passport{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:18px;background:rgba(0,0,0,0.22);border-radius:14px;margin-bottom:24px;border:1px solid var(--glass-border);}
+  .passport div{font-size:12px;color:var(--muted);}
+  .passport div b{display:block;color:var(--cream);font-size:14.5px;font-weight:600;margin-top:3px;font-family:'Inter',sans-serif;}
+  .roast-scale{margin-bottom:24px;}
+  .roast-scale-label{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:8px;}
+  .roast-bar{height:6px;background:rgba(255,255,255,0.08);border-radius:4px;position:relative;overflow:hidden;}
+  .roast-bar i{position:absolute;top:0;left:0;bottom:0;background:linear-gradient(90deg, var(--yellow), var(--red));border-radius:4px;}
+  .modal-footer{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+  .modal-price{font-size:24px;font-weight:700;}
+  .modal-price span{font-size:12px;color:var(--muted);font-weight:400;display:block;}
+  .qty-wrap{display:flex;align-items:center;gap:14px;}
+  .qty-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--glass-border);background:transparent;color:var(--cream);font-size:16px;cursor:pointer;}
+  .qty-btn:hover{border-color:var(--yellow);color:var(--yellow);}
+  .modal-add{background:var(--red);color:var(--cream);border:none;padding:14px 26px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;width:100%;margin-top:20px;}
+  .modal-add:hover{filter:brightness(1.1);}
+
+  /* ===== CART MODAL ===== */
+  .cart-modal{
+    background:var(--surface-2);border:1px solid var(--glass-border);
+    border-radius:24px;max-width:520px;width:100%;
+    max-height:88vh;overflow-y:auto;position:relative;padding:34px;
+  }
+  .cart-modal h3{font-size:22px;font-weight:600;margin-bottom:22px;font-family:'Unbounded',sans-serif;}
+  .cart-empty{color:var(--muted);font-size:14px;text-align:center;padding:40px 0;}
+  .cart-item{
+    display:flex;gap:14px;align-items:center;
+    padding:14px 0;border-bottom:1px solid var(--glass-border);
+  }
+  .cart-item-media{
+    width:56px;height:56px;border-radius:10px;flex-shrink:0;
+    background:linear-gradient(160deg, var(--brown), #2b1a10);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .cart-item-media svg{width:22px;}
+  .cart-item-info{flex-grow:1;}
+  .cart-item-info b{display:block;font-size:14.5px;font-weight:600;}
+  .cart-item-info span{font-size:12.5px;color:var(--muted);}
+  .cart-item-qty{display:flex;align-items:center;gap:8px;}
+  .cart-item-remove{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:4px;}
+  .cart-item-remove:hover{color:var(--red);}
+  .cart-summary{padding-top:20px;}
+  .cart-total{display:flex;justify-content:space-between;font-size:17px;font-weight:700;margin-bottom:18px;}
+  .cart-checkout-fields{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+  .cart-checkout-fields input{
+    background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);
+    border-radius:10px;padding:13px 14px;color:var(--cream);font-size:14px;outline:none;
+  }
+  .cart-checkout-fields input:focus{border-color:var(--yellow);}
+  .cart-checkout-btn{
+    background:var(--red);color:var(--cream);border:none;width:100%;
+    padding:15px;border-radius:10px;font-weight:600;font-size:14.5px;cursor:pointer;
+  }
+  .cart-checkout-btn:hover{filter:brightness(1.1);}
+
+  /* ===== THANK YOU MODAL ===== */
+  .thanks-modal{
+    background:var(--surface-2);border:1px solid var(--glass-border);
+    border-radius:24px;max-width:420px;width:100%;
+    padding:44px 36px;text-align:center;position:relative;
+  }
+  .thanks-icon{
+    width:64px;height:64px;border-radius:50%;background:var(--yellow-soft);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 22px;
+    font-size:28px;color:var(--yellow);
+  }
+  .thanks-modal h3{font-size:22px;font-weight:600;margin-bottom:12px;font-family:'Unbounded',sans-serif;}
+  .thanks-modal p{color:var(--muted);font-size:14.5px;margin-bottom:26px;}
+  .thanks-close-btn{
+    background:var(--yellow);color:#1a1614;border:none;
+    padding:13px 30px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;
+  }
+  .thanks-close-btn:hover{filter:brightness(1.05);}
+
+  /* ===== RESPONSIVE ===== */
+  @media(max-width:960px){
+    nav{display:none;}
+    .nav-toggle{display:flex;}
+    .hero{grid-template-columns:1fr;padding-top:40px;padding-bottom:48px;gap:36px;}
+    .hero h1{font-size:38px;}
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .roast-compare{grid-template-columns:repeat(2,1fr);}
+    .reviews-grid{grid-template-columns:1fr 1fr;}
+    .subscribe-wrap{grid-template-columns:1fr;padding:36px;}
+    .about-inner{grid-template-columns:1fr;gap:32px;}
+    .contact-grid{grid-template-columns:1fr;}
+    .footer-inner{grid-template-columns:1fr 1fr;}
+    .modal{grid-template-columns:1fr;}
+    .modal-media{min-height:160px;}
+    .section{padding:64px 20px;}
+  }
+  @media(max-width:600px){
+    .grid{grid-template-columns:1fr;}
+    .roast-compare{grid-template-columns:1fr;}
+    .reviews-grid{grid-template-columns:1fr;}
+    .cat-tabs{overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px;}
+    .hero{padding:32px 20px 40px;}
+    .hero h1{font-size:29px;letter-spacing:-0.5px;}
+    .hero p{font-size:15px;}
+    .hero-actions{flex-direction:column;}
+    .hero-actions button{width:100%;}
+    .hero-stats{flex-direction:column;gap:10px;}
+    .footer-inner{grid-template-columns:1fr;gap:28px;}
+    .form-row{grid-template-columns:1fr;}
+    .float-btn{width:44px;height:44px;font-size:18px;}
+    .float-contacts{bottom:16px;right:16px;gap:10px;}
+    .header-inner{padding:14px 16px;}
+    .brand-name{font-size:16px;}
+    .cart-btn{padding:9px 14px;font-size:13px;}
+    .section-head h2{font-size:26px;}
+    .subscribe-copy h2{font-size:26px;}
+    .contact-quick h2{font-size:24px;}
+    .feedback-form, .cart-modal, .thanks-modal{padding:24px;}
+    .modal-body{padding:26px 22px;}
+  }
+  @media (prefers-reduced-motion: reduce){*{transition:none !important;}}
+</style>
+</head>
+<body>
+
+<div class="bg-decor">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="ring-outline ring-1"></div>
+  <div class="ring-outline ring-2"></div>
+  <div class="bean-field"></div>
+</div>
+<div class="noise-overlay"></div>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="cup-mark"><div class="cup-mark-inner">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M4 10h13a3 3 0 010 6h-1" stroke="#F4C90D" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M4 10v4a5 5 0 005 5h3a5 5 0 005-5v-1" stroke="#F4C90D" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M8 4c0 1-1 1-1 2s1 1 1 2M11.5 4c0 1-1 1-1 2s1 1 1 2" stroke="#F4C90D" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+      </div></div>
+      <div class="brand-name"><b>КОФЕ</b> <span>Optima</span></div>
+    </div>
+    <nav>
+      <a href="#catalog">Каталог</a>
+      <a href="#roast">Обжарка</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#subscribe">Подписка</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <div class="header-actions">
+      <button class="nav-toggle" id="navToggle">☰</button>
+      <button class="cart-btn" id="cartBtn">Корзина <span class="cart-badge" id="cartBadge">0</span></button>
+    </div>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#catalog">Каталог</a>
+    <a href="#roast">Обжарка</a>
+    <a href="#reviews">Отзывы</a>
+    <a href="#subscribe">Подписка</a>
+    <a href="#contacts">Контакты</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow"><span class="dot"></span>Обжарено под заказ, отправлено в течение 48 часов</div>
+    <h1>Зёрна, привезённые<br>прямиком <em>из Европы</em></h1>
+    <p>Мы работаем с семейными обжарочными в Италии, Франции, Швейцарии и Испании — и отправляем зёрна к вам, пока обжарка ещё держит аромат.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Смотреть каталог</button>
+      <button class="btn-secondary" onclick="document.getElementById('reviews').scrollIntoView({behavior:'smooth'})">Отзывы клиентов</button>
+    </div>
+  </div>
+  <div class="hero-form-card">
+    <h3>Напишите нам</h3>
+    <p>Мы ответим на ваши вопросы.</p>
+    <form class="quick-form" id="heroForm">
+      <input type="text" name="name" placeholder="Ваше имя" required>
+      <input type="tel" name="phone" placeholder="Телефон" required>
+      <textarea name="message" placeholder="Ваш вопрос" rows="3" required></textarea>
+      <button type="submit">Отправить сообщение</button>
+    </form>
+    <div class="hero-stats hero-stats-static">
+      <div><b>4</b>страны обжарки</div>
+      <div><b>18</b>сортов в наличии</div>
+      <div><b>72ч</b>от обжарки до вас</div>
+    </div>
+  </div>
+</section>
+
+<div class="origin-strip">
+  <div class="origin-strip-inner">
+    <div><strong>Италия</strong> — тёмная обжарка для эспрессо</div>
+    <div><strong>Франция</strong> — карамельные ноты, средняя обжарка</div>
+    <div><strong>Швейцария</strong> — мягкий, ореховый профиль</div>
+    <div><strong>Испания</strong> — плотное тело, шоколадный финиш</div>
+  </div>
+</div>
+
+<section class="section" id="catalog">
+  <div class="section-head">
+    <div>
+      <h2>Каталог зёрен</h2>
+      <p>Выбирайте по стране обжарки — у каждого региона свой характер и своя посуда, для которой он создан.</p>
+    </div>
+  </div>
+  <div class="cat-tabs">
+    <button class="cat-tab active" data-cat="all">Все сорта</button>
+    <button class="cat-tab" data-cat="italy"><span class="flag">🇮🇹</span> Италия</button>
+    <button class="cat-tab" data-cat="france"><span class="flag">🇫🇷</span> Франция</button>
+    <button class="cat-tab" data-cat="switzerland"><span class="flag">🇨🇭</span> Швейцария</button>
+    <button class="cat-tab" data-cat="spain"><span class="flag">🇪🇸</span> Испания</button>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section class="section" id="roast">
+  <div class="section-head">
+    <div>
+      <h2>Сравнение обжарок</h2>
+      <p>Чем темнее обжарка — тем плотнее тело и меньше кислотности. Выбирайте по вашему способу заваривания.</p>
+    </div>
+  </div>
+  <div class="roast-compare">
+    <div class="roast-card">
+      <span class="flag-big">🇨🇭</span>
+      <h3>Светлая</h3>
+      <p>Сохраняет кислотность и фруктовые ноты зерна. Раскрывается медленно, любит фильтр.</p>
+      <div class="roast-track"><i style="width:35%"></i></div>
+      <div class="roast-labels"><span>Мягкая</span><span>Кислинка</span></div>
+    </div>
+    <div class="roast-card">
+      <span class="flag-big">🇫🇷</span>
+      <h3>Средняя</h3>
+      <p>Баланс сладости и тела. Универсальный выбор для фильтра и молочных напитков.</p>
+      <div class="roast-track"><i style="width:60%"></i></div>
+      <div class="roast-labels"><span>Карамель</span><span>Баланс</span></div>
+    </div>
+    <div class="roast-card">
+      <span class="flag-big">🇪🇸</span>
+      <h3>Средне-тёмная</h3>
+      <p>Плотное тело, шоколадные и ореховые тона. Хорошо держится в молоке.</p>
+      <div class="roast-track"><i style="width:80%"></i></div>
+      <div class="roast-labels"><span>Плотный</span><span>Шоколад</span></div>
+    </div>
+    <div class="roast-card">
+      <span class="flag-big">🇮🇹</span>
+      <h3>Тёмная</h3>
+      <p>Классика для эспрессо: минимум кислотности, максимум насыщенности и крема.</p>
+      <div class="roast-track"><i style="width:95%"></i></div>
+      <div class="roast-labels"><span>Насыщенный</span><span>Горчинка</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="reviews">
+  <div class="section-head">
+    <div>
+      <h2>Отзывы клиентов</h2>
+      <p>Что говорят те, кто уже перешёл на европейскую обжарку.</p>
+    </div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Взяла Torino Scuro для рожковой кофеварки — крема плотная, вкус без кислинки, ровно то, что искала после итальянских поездок.</p>
+      <div class="review-author">
+        <div class="review-avatar">МК</div>
+        <div><b>Мария К.</b><span>Минск</span></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Заказываю уже третий месяц по подписке. Зерно всегда свежее, приходит быстро, помол делают точно под мою гейзерную турку.</p>
+      <div class="review-author">
+        <div class="review-avatar">ДС</div>
+        <div><b>Дмитрий С.</b><span>Гомель</span></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★☆</div>
+      <p class="review-text">Auvergne Doux — открытие для тех, кто не любит горечь. Мягкий, с карамелью, отлично идёт с молоком по утрам.</p>
+      <div class="review-author">
+        <div class="review-avatar">АЛ</div>
+        <div><b>Анна Л.</b><span>Витебск</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="subscribe">
+  <div class="subscribe-wrap">
+    <div class="subscribe-copy">
+      <h2>Подписка на кофе</h2>
+      <p>Свежая обжарка сама приезжает к вам — без напоминаний и без риска остаться без зерна с утра.</p>
+      <div class="subscribe-perks">
+        <div><b>✓</b> Скидка 15% на каждую поставку</div>
+        <div><b>✓</b> Меняйте сорт или паузите доставку в любой момент</div>
+        <div><b>✓</b> Помол под вашу кофеварку — бесплатно</div>
+      </div>
+    </div>
+    <div>
+      <div class="plan-toggle">
+        <button class="active" data-plan="2">Каждые 2 недели</button>
+        <button data-plan="4">Раз в 4 недели</button>
+      </div>
+      <div class="plan-card">
+        <div class="plan-price" id="planPrice">24,90 BYN<span> / доставка</span></div>
+        <div class="plan-sub" id="planSub">250 г зерна, доставка каждые 2 недели</div>
+        <form class="quick-form" id="subscribeForm">
+          <input type="text" name="name" placeholder="Ваше имя" required>
+          <input type="tel" name="phone" placeholder="Телефон" required>
+          <select name="roast" required>
+            <option value="" disabled selected>Выберите обжарку</option>
+            <option>Любой сорт (на выбор обжарщика)</option>
+            <option>Только тёмная обжарка (Италия)</option>
+            <option>Только средняя обжарка (Франция)</option>
+          </select>
+          <button type="submit">Оформить подписку</button>
+        </form>
+        <div class="form-note">Первая доставка — в течение 3 дней после оформления</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <div class="about-inner">
+    <div class="about-item">
+      <span class="num">01</span>
+      <h3>Прямые поставки от обжарочных</h3>
+      <p>Работаем без посредников с семейными мануфактурами в Турине, Лионе, Люцерне и Ла-Корунье.</p>
+    </div>
+    <div class="about-item">
+      <span class="num">02</span>
+      <h3>Обжарка под заказ</h3>
+      <p>Зёрна обжариваются партиями по вашей заявке и упаковываются с клапаном для дегазации.</p>
+    </div>
+    <div class="about-item">
+      <span class="num">03</span>
+      <h3>Помол под вашу технику</h3>
+      <p>Уточните способ заваривания в заказе — смелем под эспрессо-машину, гейзер или пуровер.</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contacts">
+  <div class="contact-grid">
+    <div class="contact-quick">
+      <h2>Свяжитесь с нами</h2>
+      <p>Ответим в течение рабочего дня. Для срочных вопросов быстрее всего писать в Telegram или WhatsApp.</p>
+      <div class="quick-links">
+        <a class="quick-link" href="tel:+375291234567">
+          <div class="ql-icon">📞</div>
+          <div><span>Телефон</span><b>+375 29 123-45-67</b></div>
+        </a>
+        <a class="quick-link" href="https://t.me/kofeoptima" target="_blank">
+          <div class="ql-icon">✈️</div>
+          <div><span>Telegram</span><b>@kofeoptima</b></div>
+        </a>
+        <a class="quick-link" href="https://wa.me/375291234567" target="_blank">
+          <div class="ql-icon">💬</div>
+          <div><span>WhatsApp</span><b>+375 29 123-45-67</b></div>
+        </a>
+        <a class="quick-link" href="mailto:hello@kofe-optima.by">
+          <div class="ql-icon">✉️</div>
+          <div><span>Email</span><b>hello@kofe-optima.by</b></div>
+        </a>
+      </div>
+    </div>
+    <div class="feedback-form">
+      <h3>Остались вопросы? Напишите нам</h3>
+      <p>Вопрос по заказу, оптовая поставка или сотрудничество — напишите нам напрямую.</p>
+      <form id="feedbackForm">
+        <div class="form-row">
+          <div class="field"><label>Имя</label><input type="text" name="name" placeholder="Как к вам обращаться" required></div>
+          <div class="field"><label>Телефон или email</label><input type="text" name="contact" placeholder="Для ответа" required></div>
+        </div>
+        <div class="field" style="margin-bottom:18px;">
+          <label>Сообщение</label>
+          <textarea name="message" rows="4" placeholder="Расскажите, чем можем помочь" required></textarea>
+        </div>
+        <button class="feedback-submit" type="submit">Отправить сообщение</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="brand-name"><b>КОФЕ</b> <span>Optima</span></div>
+      <p>Зёрна из Европы, обжаренные для Беларуси. Прямые поставки без посредников.</p>
+      <div class="footer-social">
+        <a class="icon-btn" href="https://t.me/kofeoptima" target="_blank">✈️</a>
+        <a class="icon-btn" href="https://wa.me/375291234567" target="_blank">💬</a>
+        <a class="icon-btn" href="mailto:hello@kofe-optima.by">✉️</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Каталог</h4>
+      <a href="#catalog">Все сорта</a>
+      <a href="#roast">Сравнение обжарок</a>
+      <a href="#subscribe">Подписка</a>
+    </div>
+    <div class="footer-col">
+      <h4>Компания</h4>
+      <a href="#reviews">Отзывы</a>
+      <a href="#contacts">Контакты</a>
+      <a href="#">Доставка и оплата</a>
+    </div>
+    <div class="footer-col">
+      <h4>Контакты</h4>
+      <div>+375 29 123-45-67</div>
+      <div>hello@kofe-optima.by</div>
+      <div>г. Минск, ул. Кофейная, 12</div>
+    </div>
+  </div>
+  <div class="legal-block">
+    <b>ООО «Кофе Оптима»</b>, Республика Беларусь · УНП 190123456 · Юридический адрес: 220000, г. Минск, ул. Кофейная, 12, офис 4 ·
+    Свидетельство о регистрации № 4560123 от 03.02.2021, выдано Мингорисполкомом ·
+    Режим работы: пн–пт 9:00–19:00 · © 2026 Кофе Optima. Все права защищены.
+  </div>
+</footer>
+
+<div class="float-contacts">
+  <a class="float-btn wa" href="https://wa.me/375291234567" target="_blank" title="Написать в WhatsApp">💬</a>
+  <a class="float-btn tg" href="https://t.me/kofeoptima" target="_blank" title="Написать в Telegram">✈️</a>
+  <a class="float-btn call" href="tel:+375291234567" title="Позвонить">📞</a>
+</div>
+
+<!-- Product detail modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<!-- Cart modal -->
+<div class="modal-overlay" id="cartOverlay">
+  <div class="cart-modal" id="cartModalContent"></div>
+</div>
+
+<!-- Thank you modal -->
+<div class="modal-overlay" id="thanksOverlay">
+  <div class="thanks-modal" id="thanksModalContent"></div>
+</div>
+
+<script>
+const CUR = 'BYN';
+const products = [
+  {id:1, cat:'italy', flag:'🇮🇹', country:'Италия · Пьемонт', title:'Torino Scuro', tag:'Бестселлер',
+   desc:'Классическая тёмная обжарка для насыщенного эспрессо.',
+   full:'Купаж арабики и робусты, обжаренный в предгорьях Турина. Плотная крема, горький шоколад и обжаренный орех в послевкусии — то, что итальянцы пьют по утрам у барной стойки.',
+   origin:'Пьемонт, Италия', altitude:'900–1200 м', process:'Мытая', roast:85, profile:'Тёмный шоколад, поджаренный орех', best:'Эспрессо, мока-пот', price:26.90, weight:'250 г'},
+  {id:2, cat:'italy', flag:'🇮🇹', country:'Италия · Кампания', title:'Napoli Classico', tag:'',
+   desc:'Южная неаполитанская обжарка с плотным телом.',
+   full:'Зёрна из региона Кампания, обжаренные по неаполитанской традиции — чуть дольше и чуть темнее, чем туринский стиль. Сладость карамели держится даже в самой тёмной чашке.',
+   origin:'Кампания, Италия', altitude:'700–1000 м', process:'Натуральная', roast:90, profile:'Карамель, тёмный какао', best:'Эспрессо, кофе в турке', price:25.50, weight:'250 г'},
+  {id:3, cat:'france', flag:'🇫🇷', country:'Франция · Овернь', title:'Auvergne Doux', tag:'Новинка',
+   desc:'Мягкая французская обжарка с карамельной сладостью.',
+   full:'Обжарочная в предгорьях Оверни работает малыми партиями, добиваясь ровной карамелизации сахаров без горечи. Классика французского завтрака — с молоком или без.',
+   origin:'Овернь, Франция', altitude:'600–900 м', process:'Мытая', roast:65, profile:'Карамель, поджаренный хлеб', best:'Фильтр, кофе с молоком', price:27.60, weight:'250 г'},
+  {id:4, cat:'france', flag:'🇫🇷', country:'Франция · Прованс', title:'Provence Noisette', tag:'',
+   desc:'Ореховые ноты и лёгкая цветочность.',
+   full:'Зёрна с плантаций, поставляемых через Марсель, обжарены в среднем режиме — раскрывается ореховая сладость с тонкой цветочной ноткой на выдохе.',
+   origin:'Прованс, Франция', altitude:'800–1100 м', process:'Мытая', roast:55, profile:'Фундук, белые цветы', best:'Пуровер, воронка', price:28.90, weight:'250 г'},
+  {id:5, cat:'switzerland', flag:'🇨🇭', country:'Швейцария · Люцерн', title:'Luzern Mild', tag:'',
+   desc:'Деликатная обжарка, мягкая кислотность.',
+   full:'Швейцарская точность в обжарке: узкое температурное окно, ровный цвет зерна, минимум горечи. Подходит тем, кто только знакомится со специальным кофе.',
+   origin:'Люцерн, Швейцария', altitude:'500–700 м', process:'Мытая', roast:45, profile:'Миндаль, мёд', best:'Фильтр, аэропресс', price:31.90, weight:'250 г'},
+  {id:6, cat:'switzerland', flag:'🇨🇭', country:'Швейцария · Тичино', title:'Ticino Alpino', tag:'',
+   desc:'Альпийская обжарка с горным характером.',
+   full:'Обжаривается в Тичино, на границе с Италией — сочетает швейцарскую мягкость с южной плотностью тела. Хорошо держит температуру в высоких кружках.',
+   origin:'Тичино, Швейцария', altitude:'1000–1300 м', process:'Мытая', roast:60, profile:'Молочный шоколад, груша', best:'Капучино, американо', price:33.00, weight:'250 г'},
+  {id:7, cat:'spain', flag:'🇪🇸', country:'Испания · Галисия', title:'Coruña Torrado', tag:'Хит продаж',
+   desc:'Плотное тело, шоколадный финиш.',
+   full:'Обжарочная в Ла-Корунье использует традиционный испанский torrefacto-метод — зёрна карамелизуются, отсюда густой шоколадный вкус и долгое, тёплое послевкусие.',
+   origin:'Галисия, Испания', altitude:'400–600 м', process:'Torrefacto', roast:80, profile:'Тёмный шоколад, карамель', best:'Кортадо, эспрессо', price:26.30, weight:'250 г'},
+  {id:8, cat:'spain', flag:'🇪🇸', country:'Испания · Андалусия', title:'Andalucía Dulce', tag:'',
+   desc:'Южная сладость и лёгкая пряность.',
+   full:'Из Андалусии — зёрна с тёплой сладостью, напоминающей сушёный инжир, и тонкой пряной нотой в самом конце. Хорошо раскрывается в молочных напитках.',
+   origin:'Андалусия, Испания', altitude:'500–800 м', process:'Натуральная', roast:70, profile:'Инжир, корица', best:'Латте, флэт-уайт', price:27.20, weight:'250 г'},
+  {id:9, cat:'italy', flag:'🇮🇹', country:'Италия · Сицилия', title:'Sicilia Intenso', tag:'',
+   desc:'Насыщенная южная обжарка с нотами специй.',
+   full:'Сицилийская обжарочная работает с зерном при высокой температуре недолго — получается яркий, почти дымный характер с нотой чёрного перца.',
+   origin:'Сицилия, Италия', altitude:'300–600 м', process:'Натуральная', roast:88, profile:'Чёрный перец, тёмный шоколад', best:'Эспрессо, ристретто', price:26.60, weight:'250 г'}
+];
+
+function fmt(n){ return n.toFixed(2).replace('.', ',') + ' ' + CUR; }
+
+const beanSVG = `<svg class="bean" viewBox="0 0 60 90" fill="none"><path d="M30 2C14 2 4 24 4 45c0 21 10 43 26 43s26-22 26-43C56 24 46 2 30 2z" stroke="#F4C90D" stroke-width="2.5" opacity="0.55"/><path d="M30 6c-10 12-10 66 0 78" stroke="#F4C90D" stroke-width="2.5" opacity="0.55"/></svg>`;
+
+/* ---------- Catalog grid ---------- */
+const grid = document.getElementById('grid');
+function renderGrid(filter){
+  grid.innerHTML = '';
+  const list = filter === 'all' ? products : products.filter(p => p.cat === filter);
+  list.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-media">${p.tag ? `<div class="card-tag">${p.tag}</div>` : ''}${beanSVG}</div>
+      <div class="card-body">
+        <div class="card-country">${p.flag} ${p.country}</div>
+        <div class="card-title">${p.title}</div>
+        <div class="card-desc">${p.desc}</div>
+        <div class="card-footer">
+          <div class="card-price">${fmt(p.price)} <span>/ ${p.weight}</span></div>
+          <button class="card-add">Подробнее</button>
+        </div>
+      </div>`;
+    card.addEventListener('click', () => openProductModal(p));
+    grid.appendChild(card);
+  });
+}
+document.querySelectorAll('.cat-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    renderGrid(tab.dataset.cat);
+  });
+});
+renderGrid('all');
+
+/* ---------- Mobile nav ---------- */
+const navToggle = document.getElementById('navToggle');
+const mobileNav = document.getElementById('mobileNav');
+navToggle.addEventListener('click', () => mobileNav.classList.toggle('open'));
+mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileNav.classList.remove('open')));
+
+/* ---------- Product modal ---------- */
+const modalOverlay = document.getElementById('modalOverlay');
+const modalContent = document.getElementById('modalContent');
+let modalQty = 1;
+
+function openProductModal(p){
+  modalQty = 1;
+  modalContent.innerHTML = `
+    <button class="modal-close" data-close-modal>&times;</button>
+    <div class="modal-media">${beanSVG}</div>
+    <div class="modal-body">
+      <div class="modal-country">${p.flag} ${p.country}</div>
+      <div class="modal-title">${p.title}</div>
+      <div class="modal-desc">${p.full}</div>
+      <div class="passport">
+        <div>Высота<b>${p.altitude}</b></div>
+        <div>Обработка<b>${p.process}</b></div>
+        <div>Вкусовой профиль<b>${p.profile}</b></div>
+        <div>Рекомендуем для<b>${p.best}</b></div>
+      </div>
+      <div class="roast-scale">
+        <div class="roast-scale-label"><span>Светлая обжарка</span><span>Тёмная обжарка</span></div>
+        <div class="roast-bar"><i style="width:${p.roast}%"></i></div>
+      </div>
+      <div class="modal-footer">
+        <div class="modal-price" id="modalPrice">${fmt(p.price)}<span>${p.weight} · зерно</span></div>
+        <div class="qty-wrap">
+          <button class="qty-btn" id="qtyMinus">−</button>
+          <span id="qtyValue">1</span>
+          <button class="qty-btn" id="qtyPlus">+</button>
+        </div>
+      </div>
+      <button class="modal-add" id="modalAddBtn">Добавить в корзину — ${fmt(p.price)}</button>
+    </div>`;
+  modalOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  const addBtn = document.getElementById('modalAddBtn');
+  const qtyValue = document.getElementById('qtyValue');
+  document.getElementById('qtyPlus').addEventListener('click', () => {
+    modalQty++; qtyValue.textContent = modalQty;
+    addBtn.textContent = `Добавить в корзину — ${fmt(p.price * modalQty)}`;
+  });
+  document.getElementById('qtyMinus').addEventListener('click', () => {
+    if(modalQty > 1){ modalQty--; qtyValue.textContent = modalQty;
+      addBtn.textContent = `Добавить в корзину — ${fmt(p.price * modalQty)}`; }
+  });
+  addBtn.addEventListener('click', () => {
+    addToCart(p.id, modalQty);
+    closeOverlay(modalOverlay);
+  });
+  modalContent.querySelector('[data-close-modal]').addEventListener('click', () => closeOverlay(modalOverlay));
+}
+
+function closeOverlay(el){ el.classList.remove('open'); document.body.style.overflow = ''; }
+[modalOverlay].forEach(ov => ov.addEventListener('click', e => { if(e.target === ov) closeOverlay(ov); }));
+
+/* ---------- Cart ---------- */
+let cart = {}; // {productId: qty}
+
+function cartCount(){ return Object.values(cart).reduce((a,b)=>a+b,0); }
+function cartTotal(){
+  return Object.entries(cart).reduce((sum, [id, qty]) => {
+    const p = products.find(pr => pr.id == id);
+    return sum + (p ? p.price * qty : 0);
+  }, 0);
+}
+function updateCartBadge(){ document.getElementById('cartBadge').textContent = cartCount(); }
+
+function addToCart(id, qty){
+  cart[id] = (cart[id] || 0) + qty;
+  updateCartBadge();
+}
+
+const cartOverlay = document.getElementById('cartOverlay');
+const cartModalContent = document.getElementById('cartModalContent');
+const cartBtn = document.getElementById('cartBtn');
+
+/* ---------- Form validation helper ---------- */
+/* Проверяет обязательные поля формы: если что-то не заполнено — браузер
+   подсвечивает поле и показывает подсказку, форма не отправляется. */
+function validateForm(form){
+  if(!form.checkValidity()){
+    form.reportValidity();
+    return false;
+  }
+  return true;
+}
+function renderCart(){
+  const ids = Object.keys(cart).filter(id => cart[id] > 0);
+  if(ids.length === 0){
+    cartModalContent.innerHTML = `
+      <button class="modal-close" data-close-cart>&times;</button>
+      <h3>Корзина</h3>
+      <div class="cart-empty">Пока пусто. Добавьте зёрна из каталога.</div>`;
+  } else {
+    const itemsHTML = ids.map(id => {
+      const p = products.find(pr => pr.id == id);
+      return `
+        <div class="cart-item" data-id="${id}">
+          <div class="cart-item-media">${beanSVG}</div>
+          <div class="cart-item-info">
+            <b>${p.title}</b>
+            <span>${fmt(p.price)} / ${p.weight}</span>
+          </div>
+          <div class="cart-item-qty">
+            <button class="qty-btn cart-qty-minus">−</button>
+            <span>${cart[id]}</span>
+            <button class="qty-btn cart-qty-plus">+</button>
+          </div>
+          <button class="cart-item-remove" title="Удалить">🗑</button>
+        </div>`;
+    }).join('');
+
+    cartModalContent.innerHTML = `
+      <button class="modal-close" data-close-cart>&times;</button>
+      <h3>Корзина</h3>
+      <div id="cartItemsList">${itemsHTML}</div>
+      <div class="cart-summary">
+        <div class="cart-total"><span>Итого</span><span>${fmt(cartTotal())}</span></div>
+        <div class="cart-checkout-fields">
+          <input type="text" id="checkoutName" name="name" placeholder="Имя" required>
+          <input type="tel" id="checkoutPhone" name="phone" placeholder="Телефон" required>
+          <input type="text" id="checkoutAddress" name="address" placeholder="Адрес доставки" required>
+        </div>
+        <button class="cart-checkout-btn" id="checkoutBtn">Оформить заказ</button>
+      </div>`;
+
+    cartModalContent.querySelectorAll('.cart-item').forEach(item => {
+      const id = item.dataset.id;
+      item.querySelector('.cart-qty-plus').addEventListener('click', () => { cart[id]++; updateCartBadge(); renderCart(); });
+      item.querySelector('.cart-qty-minus').addEventListener('click', () => {
+        cart[id]--;
+        if(cart[id] <= 0) delete cart[id];
+        updateCartBadge(); renderCart();
+      });
+      item.querySelector('.cart-item-remove').addEventListener('click', () => {
+        delete cart[id]; updateCartBadge(); renderCart();
+      });
+    });
+
+    document.getElementById('checkoutBtn').addEventListener('click', async () => {
+      const name = document.getElementById('checkoutName').value.trim();
+      const phone = document.getElementById('checkoutPhone').value.trim();
+      const address = document.getElementById('checkoutAddress').value.trim();
+      if(!name || !phone || !address){
+        document.getElementById('checkoutName').reportValidity();
+        return;
+      }
+      cart = {};
+      updateCartBadge();
+      closeOverlay(cartOverlay);
+      showThanks(
+        'Заказ отправлен!',
+        `Спасибо, ${name}! Мы получили ваш заказ и свяжемся с вами по номеру ${phone} для подтверждения доставки.`
+      );
+    });
+  }
+  cartModalContent.querySelector('[data-close-cart]').addEventListener('click', () => closeOverlay(cartOverlay));
+}
+
+cartBtn.addEventListener('click', () => {
+  renderCart();
+  cartOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+});
+cartOverlay.addEventListener('click', e => { if(e.target === cartOverlay) closeOverlay(cartOverlay); });
+
+/* ---------- Thank you modal ---------- */
+const thanksOverlay = document.getElementById('thanksOverlay');
+const thanksModalContent = document.getElementById('thanksModalContent');
+
+function showThanks(title, text){
+  thanksModalContent.innerHTML = `
+    <button class="modal-close" data-close-thanks>&times;</button>
+    <div class="thanks-icon">✓</div>
+    <h3>${title}</h3>
+    <p>${text}</p>
+    <button class="thanks-close-btn" data-close-thanks>Хорошо</button>`;
+  thanksOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  thanksModalContent.querySelectorAll('[data-close-thanks]').forEach(btn => {
+    btn.addEventListener('click', () => closeOverlay(thanksOverlay));
+  });
+}
+thanksOverlay.addEventListener('click', e => { if(e.target === thanksOverlay) closeOverlay(thanksOverlay); });
+
+/* ---------- Hero quick contact form ---------- */
+document.getElementById('heroForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const form = e.target;
+  if(!validateForm(form)) return;
+  form.reset();
+  showThanks('Сообщение отправлено!', 'Спасибо за обращение — мы ответим вам в течение рабочего дня.');
+});
+
+/* ---------- Subscription form ---------- */
+document.getElementById('subscribeForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const form = e.target;
+  if(!validateForm(form)) return;
+  form.reset();
+  showThanks('Подписка оформлена!', 'Спасибо за заявку — мы свяжемся с вами, чтобы подтвердить первую доставку и удобный график.');
+});
+
+/* ---------- Feedback form ---------- */
+document.getElementById('feedbackForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const form = e.target;
+  if(!validateForm(form)) return;
+  form.reset();
+  showThanks('Сообщение отправлено!', 'Спасибо за обращение — мы ответим вам в течение рабочего дня.');
+});
+
+/* ---------- Subscription plan toggle ---------- */
+const planPrice = document.getElementById('planPrice');
+const planSub = document.getElementById('planSub');
+document.querySelectorAll('.plan-toggle button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.plan-toggle button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if(btn.dataset.plan === '2'){
+      planPrice.innerHTML = '24,90 BYN<span> / доставка</span>';
+      planSub.textContent = '250 г зерна, доставка каждые 2 недели';
+    } else {
+      planPrice.innerHTML = '29,50 BYN<span> / доставка</span>';
+      planSub.textContent = '250 г зерна, доставка раз в 4 недели';
+    }
+  });
+});
+
+/* ---------- Global escape key ---------- */
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape'){
+    [modalOverlay, cartOverlay, thanksOverlay].forEach(ov => closeOverlay(ov));
+  }
+});
+</script>
+
+</body>
+</html>
